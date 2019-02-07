@@ -10,7 +10,7 @@ class FabCar extends Contract {
 
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
-        const cars = [
+        /*const cars = [
             {
                 color: 'blue',
                 make: 'Toyota',
@@ -77,8 +77,28 @@ class FabCar extends Contract {
             cars[i].docType = 'car';
             await ctx.stub.putState('CAR' + i, Buffer.from(JSON.stringify(cars[i])));
             console.info('Added <--> ', cars[i]);
-        }
+        }*/
+
+        await ctx.stub.putState('p0', '0');
+        await ctx.stub.putState('p1', '0');
+        await ctx.stub.putState('b', Buffer.from(JSON.stringify({x:0, y:0})));
+
         console.info('============= END : Initialize Ledger ===========');
+    }
+
+    async queryKey(ctx, key) {
+        const valAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
+        if (!valAsBytes || valAsBytes.length === 0) {
+            throw new Error(`${key} does not exist`);
+        }
+        console.log(keyAsBytes.toString());
+        return keyAsBytes.toString();
+    }
+
+    async updateGame(ctx, key, val) {
+        console.info('============= START : updateGame ===========');
+        await ctx.stub.putState(key, val);
+        console.info('============= END : updateGame ===========');
     }
 
     async queryCar(ctx, carNumber) {

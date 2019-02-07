@@ -13,6 +13,8 @@ const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
 async function main() {
+    var i, j;
+
     try {
 
         // Create a new file system based wallet for managing identities.
@@ -41,8 +43,11 @@ async function main() {
         // Evaluate the specified transaction.
         // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
         // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('queryAllCars');
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        for (i=0; i<20; i++) {
+                const result = await contract.evaluateTransaction('queryCar', 'p0');
+                console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+                for (j=0; j<10000000; j++) {}
+        }
 
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

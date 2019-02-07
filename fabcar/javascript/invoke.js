@@ -13,6 +13,8 @@ const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
 async function main() {
+    var i, j;
+
     try {
 
         // Create a new file system based wallet for managing identities.
@@ -41,8 +43,9 @@ async function main() {
         // Submit the specified transaction.
         // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
         // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
-        await contract.submitTransaction('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom');
-        console.log('Transaction has been submitted');
+        for (i=0; i<10; i++) {
+                await contract.submitTransaction('updateGame', 'p0', i+'');
+        }
 
         // Disconnect from the gateway.
         await gateway.disconnect();
